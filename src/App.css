@@ -1,0 +1,94 @@
+.custom-select .ant-select-selector {
+    border-radius: 16px !important;
+}
+
+/* Custom row colors based on keys */
+.table-row-1 {
+    background-color: #FFCCCC; /* Light red */
+  }
+  
+  .table-row-2 {
+    background-color: #CCFFCC; /* Light green */
+  }
+  
+  .table-row-3 {
+    background-color: #CCCCFF; /* Light blue */
+  }
+
+  /* Custom row styles */
+.custom-row {
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.custom-loan-searchbox .ant-input-affix-wrapper {
+  height: 40px !important;
+  border-radius: 10px !important;
+}
+
+/* Styles for screens wider than 768px */
+@media (min-width: 768px) {
+  .custom-loan-searchbox .ant-input {
+    width: 280px !important; /* Apply width only on screens above 768px */
+  }
+}
+
+.custom-loan-searchbox .ant-input-search-button {
+  height: 40px !important;
+}
+
+/* If using Ant Design Select, set border-radius */
+.custom-loan-searchbox .ant-select-selector {
+  height: 40px !important;
+  margin-top: -10px;
+} 
+
+.custom-loan-container {
+  display: flex;
+  align-items: center; /* Ensures alignment */
+  gap: 8px; /* Optional: Adds space between elements */
+}
+
+.custom-loan-container .ant-input-affix-wrapper,
+.custom-loan-container .ant-select-selector {
+  height: 35px !important;
+  width: 100% !important; /* Ensures both take full width */
+  max-width: 300px; /* Adjust as needed */
+  border-radius: 9px !important;
+}
+
+/* Ensures the Select component itself has the correct width */
+.custom-loan-container .ant-select {
+  width: 100% !important;
+}
+
+/* Fixing the search button's border-radius */
+.custom-loan-container .ant-input-search-button {
+  height: 35px !important;
+  border-top-right-radius: 20px !important;
+  border-bottom-right-radius: 20px !important;
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+}
+
+.quill-editor .ql-container {
+  border-bottom-right-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
+  background-color: #F1F1F15C;
+}
+
+/* Apply rounded corners to the toolbar */
+.quill-editor .ql-toolbar {
+  border-top-right-radius: 0.5rem;
+  border-top-left-radius: 0.5rem;
+  background-color: #F1F1F15C;
+}
+
+/* .quill-editor .ql-editor {
+  border-radius: 0.5rem;
+} */
+
+.custom-datepicker .ant-picker {
+  border-radius: 9px !important;
+  height: 30px ;
+}
