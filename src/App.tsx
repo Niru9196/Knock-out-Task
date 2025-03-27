@@ -183,7 +183,6 @@ const App: React.FC = () => {
                     getTaskById={getTaskById}
                     deleteTaskById={deleteTaskById}
                     updateTask={updateTask}
-                    getTaskById={getTaskById}
                     onCloseModal={onCloseModal}
                 />
             )}
