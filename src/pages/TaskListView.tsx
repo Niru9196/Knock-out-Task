@@ -130,18 +130,6 @@ const App: React.FC<AppProps> = ({ tasks, setTasks,  deleteTaskById, setIsModalO
                             >
                                 <Col span={24} md={6}>
                                     <div className="flex gap-2">
-                                        {/* <Checkbox
-                                            className="scale-120"
-                                            checked={selectedTasks.includes(
-                                                task.id
-                                            )}
-                                            onChange={() =>
-                                                handleCheckboxChange(
-                                                    task.id,
-                                                    task.taskStatus
-                                                )
-                                            }
-                                        /> */}
                                         <p
                                             className={
                                                 section === "Completed"
@@ -237,7 +225,7 @@ const App: React.FC<AppProps> = ({ tasks, setTasks,  deleteTaskById, setIsModalO
                 onCancel={handleCancel}
                 okText="Yes, Delete"
                 cancelText="No, Cancel"
-                danger
+                okButtonProps={{ danger: true }}
             >
                 <p>
                     Are you sure you want to delete this item? This action
@@ -245,28 +233,6 @@ const App: React.FC<AppProps> = ({ tasks, setTasks,  deleteTaskById, setIsModalO
                 </p>
             </Modal>
 
-            {/* {selectedTasks.length > 0 && (
-                <div className="selected-info p-3 mt-4 bg-black bg-opacity-90 text-white rounded-lg shadow-sm flex gap-2 max-w-[30%]">
-                    <p>
-                        {selectedTasks.length} task
-                        {selectedTasks.length > 1 ? "s" : ""} selected
-                    </p>
-                    <Button
-                        onClick={handleOptions}
-                        className="border border-white !bg-black !text-white"
-                    >
-                        Status
-                    </Button>
-                    <Button
-                        icon={<DeleteOutlined />}
-                        onClick={() => showDeleteModal()}
-                        className="border border-white !bg-black !text-white"
-                        danger
-                    >
-                        Delete
-                    </Button>
-                </div>
-            )} */}
             {isModalOpen && <TaskPopup open={isModalOpen} onClose={(taskData) => handleSubmit(taskData)} selectedTaskId={selectedTaskId} selectedIdtaskData={selectedIdtaskData} setIsModalOpen={setIsModalOpen} onCloseModal={onCloseModal} />}
         </div>
     );
