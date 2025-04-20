@@ -4,17 +4,10 @@ import {
     Col,
     Tag,
     Typography,
-    Popover,
-    Menu,
-    Checkbox,
-    Button,
     message,
     Modal,
 } from "antd";
 import {
-    MoreOutlined,
-    EditOutlined,
-    DeleteOutlined,
     UpOutlined,
     DownOutlined,
 } from "@ant-design/icons";
@@ -78,6 +71,7 @@ const App: React.FC<AppProps> = ({ tasks, setTasks,  deleteTaskById, setIsModalO
                 ? prev.filter((id) => id !== taskId)
                 : [...prev, taskId]
         );
+        
     };
 
     const showDeleteModal = (task: TaskData) => {
@@ -136,7 +130,7 @@ const App: React.FC<AppProps> = ({ tasks, setTasks,  deleteTaskById, setIsModalO
                             >
                                 <Col span={24} md={6}>
                                     <div className="flex gap-2">
-                                        <Checkbox
+                                        {/* <Checkbox
                                             className="scale-120"
                                             checked={selectedTasks.includes(
                                                 task.id
@@ -147,7 +141,7 @@ const App: React.FC<AppProps> = ({ tasks, setTasks,  deleteTaskById, setIsModalO
                                                     task.taskStatus
                                                 )
                                             }
-                                        />
+                                        /> */}
                                         <p
                                             className={
                                                 section === "Completed"
@@ -238,7 +232,7 @@ const App: React.FC<AppProps> = ({ tasks, setTasks,  deleteTaskById, setIsModalO
             {renderTaskSection("Completed", "bg-[#CEFFCC]")}
             <Modal
                 title="Are you sure you want to delete?"
-                visible={isModalVisible}
+                open={isModalVisible}
                 onOk={handleDelete}
                 onCancel={handleCancel}
                 okText="Yes, Delete"
@@ -251,7 +245,7 @@ const App: React.FC<AppProps> = ({ tasks, setTasks,  deleteTaskById, setIsModalO
                 </p>
             </Modal>
 
-            {selectedTasks.length > 0 && (
+            {/* {selectedTasks.length > 0 && (
                 <div className="selected-info p-3 mt-4 bg-black bg-opacity-90 text-white rounded-lg shadow-sm flex gap-2 max-w-[30%]">
                     <p>
                         {selectedTasks.length} task
@@ -265,14 +259,14 @@ const App: React.FC<AppProps> = ({ tasks, setTasks,  deleteTaskById, setIsModalO
                     </Button>
                     <Button
                         icon={<DeleteOutlined />}
-                        onClick={handleDelete}
+                        onClick={() => showDeleteModal()}
                         className="border border-white !bg-black !text-white"
                         danger
                     >
                         Delete
                     </Button>
                 </div>
-            )}
+            )} */}
             {isModalOpen && <TaskPopup open={isModalOpen} onClose={(taskData) => handleSubmit(taskData)} selectedTaskId={selectedTaskId} selectedIdtaskData={selectedIdtaskData} setIsModalOpen={setIsModalOpen} onCloseModal={onCloseModal} />}
         </div>
     );
