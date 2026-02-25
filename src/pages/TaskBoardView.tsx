@@ -61,7 +61,7 @@ const TaskBoard: React.FC<TaskBoardProps> = ({
       if (!draggedTask) return;
 
       try {
-        const updatedTask = { ...draggedTask, taskStatus: newSection };
+        // const updatedTask = { ...draggedTask, taskStatus: newSection };
         setTasks((prevTasks) =>
           prevTasks.map((task) =>
             task.id === draggedTask.id

@@ -29,6 +29,7 @@ const App: React.FC = () => {
   const navigate = useNavigate();
 
   const handleDateChange = (date: any, dateString: string | string[]) => {
+    console.log("date: ", date);
     setFilterDueTask(Array.isArray(dateString) ? dateString[0] : dateString);
   };
 
@@ -39,6 +40,8 @@ const App: React.FC = () => {
   const handleSearch = (value: string) => {
     setSearchTerm(value);
   };
+
+  console.log("dragtask: ", dragtask);
 
   const onCloseModal = () => {
     setSelectedIdTaskData(null);
