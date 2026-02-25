@@ -121,7 +121,7 @@ const Header = () => (
     </div>
 );
 
-const Footer = ({ handleGoogleSignIn }) => (
+const Footer = ({ handleGoogleSignIn }: { handleGoogleSignIn: () => void }) => (
     <div className="text-center mt-4">
         <span>New here? </span>
         <Link to="/signup">

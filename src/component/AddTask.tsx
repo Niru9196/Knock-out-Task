@@ -3,7 +3,7 @@ import { Modal, Input, Button, Form, Select, Radio, message } from "antd";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { TASK_STATUS } from "../helper/Constant";
-import { TaskData, TaskPopupProps,  } from "../types/task";
+import { TaskData, TaskPopupProps } from "../types/task";
 
 const TaskPopup: React.FC<TaskPopupProps> = ({
     open,

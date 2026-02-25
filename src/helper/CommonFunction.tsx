@@ -1,15 +1,16 @@
+import React, { useCallback } from "react";
 import { Button, Dropdown, message, MenuProps } from "antd";
 import { MoreOutlined } from "@ant-design/icons";
-import { useCallback } from "react";
+import { Task } from "../types/task";
 
 interface EditTaskDropdownProps {
   id: string;
   setSelectedTaskId: (id: string) => void;
-  getTaskById: (id: string) => Promise<any>;
+  getTaskById: (id: string) => Promise<Task>;
   setIsModalOpen: (prevState: boolean) => void;
-  setSelectedIdTaskData: (data: any) => void;
+  setSelectedIdTaskData: (data: Task) => void;
   deleteTaskById: (id: string) => Promise<void>;
-  setTasks: (tasks: any[]) => void;
+  setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
 }
 
 const EditTaskDropdown: React.FC<EditTaskDropdownProps> = ({
@@ -21,7 +22,6 @@ const EditTaskDropdown: React.FC<EditTaskDropdownProps> = ({
   deleteTaskById,
   setTasks,
 }) => {
-  
   const handleEditTask = useCallback(
     async (id: string) => {
       try {
@@ -34,7 +34,7 @@ const EditTaskDropdown: React.FC<EditTaskDropdownProps> = ({
         message.error("Error fetching task details.");
       }
     },
-    [setSelectedTaskId, getTaskById, setSelectedIdTaskData, setIsModalOpen]
+    [setSelectedTaskId, getTaskById, setSelectedIdTaskData, setIsModalOpen],
   );
 
   const handleDeleteTask = useCallback(
@@ -48,10 +48,10 @@ const EditTaskDropdown: React.FC<EditTaskDropdownProps> = ({
         message.error("Problem deleting task");
       }
     },
-    [deleteTaskById, setTasks]
+    [deleteTaskById, setTasks],
   );
 
-  const menuItems: MenuProps['items'] = [
+  const menuItems: MenuProps["items"] = [
     {
       key: "edit",
       label: "Edit",
@@ -68,7 +68,7 @@ const EditTaskDropdown: React.FC<EditTaskDropdownProps> = ({
     <Dropdown
       menu={{ items: menuItems }}
       trigger={["click"]}
-      placement="left"
+      placement="bottomLeft"
     >
       <Button
         icon={<MoreOutlined />}

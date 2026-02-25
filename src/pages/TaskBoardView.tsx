@@ -1,21 +1,15 @@
 import React, { useState, useCallback } from "react";
 import { Card, message } from "antd";
 import TaskPopup from "../component/AddTask";
-import { EditTaskDropdown } from "../helper/CommonFunction";
-import { capitalizeFirstLetter, removeHtmlTags } from "../helper/UtilCommon";
-import { TaskData, Task, TaskCardProps } from "../types/task";
+import { capitalizeFirstLetter } from "../helper/UtilCommon";
+import { TaskData, Task } from "../types/task";
 import TaskCard from "../component/TaskCard";
 
-enum SectionStatus {
-    TODO = "TO-DO",
-    IN_PROGRESS = "IN-PROGRESS",
-    COMPLETED = "COMPLETED",
+export enum SectionStatus {
+  TODO = "to-do",
+  IN_PROGRESS = "in-progress",
+  COMPLETED = "completed",
 }
-
-interface UpdateTaskPayload {
-    taskStatus: SectionStatus;
-}
-
 
 interface TaskBoardProps {
   tasks: Task[];
@@ -23,14 +17,14 @@ interface TaskBoardProps {
   setDragTask: React.Dispatch<React.SetStateAction<boolean>>;
   isModalOpen: boolean;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  handleSubmit: (taskData: TaskData) => Promise<void>;
+  handleSubmit: (taskData: TaskData) => Promise<void | unknown>;
   selectedTaskId: string;
   setSelectedTaskId: React.Dispatch<React.SetStateAction<string>>;
-  selectedIdTaskData: Task | null;
+  selectedIdtaskData: Task | null;
   setSelectedIdTaskData: React.Dispatch<React.SetStateAction<Task | null>>;
   getTaskById: (id: string) => Promise<Task>;
   deleteTaskById: (id: string) => Promise<void>;
-  updateTask: (id: string, data: UpdateTaskPayload) => Promise<void>;
+  updateTask: (id: string, updatedData: Partial<Task>) => Promise<void>;
   onCloseModal: () => void;
 }
 
@@ -43,7 +37,7 @@ const TaskBoard: React.FC<TaskBoardProps> = ({
   handleSubmit,
   selectedTaskId,
   setSelectedTaskId,
-  selectedIdTaskData,
+  selectedIdtaskData,
   setSelectedIdTaskData,
   getTaskById,
   deleteTaskById,
@@ -55,7 +49,8 @@ const TaskBoard: React.FC<TaskBoardProps> = ({
 
   const handleDragStart = (task: Task) => setDraggedTask(task);
 
-  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => e.preventDefault();
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) =>
+    e.preventDefault();
 
   const handleDragEnter = (section: SectionStatus) => setDropTarget(section);
 
@@ -68,11 +63,13 @@ const TaskBoard: React.FC<TaskBoardProps> = ({
       try {
         const updatedTask = { ...draggedTask, taskStatus: newSection };
         setTasks((prevTasks) =>
-            prevTasks.map((task) =>
-              task.id === draggedTask.id ? { ...task, taskStatus: newSection } : task
-            )
+          prevTasks.map((task) =>
+            task.id === draggedTask.id
+              ? { ...task, taskStatus: newSection }
+              : task,
+          ),
         );
-        await updateTask(draggedTask.id, updatedTask);
+        await updateTask(draggedTask.id!, { taskStatus: newSection });
         message.success("Task updated successfully!");
       } catch (error) {
         console.error("Error updating task:", error);
@@ -83,18 +80,31 @@ const TaskBoard: React.FC<TaskBoardProps> = ({
         setDropTarget(null);
       }
     },
-    [draggedTask, setTasks, updateTask, setDragTask]
+    [draggedTask, setTasks, updateTask, setDragTask],
   );
 
   const renderTaskSection = (section: SectionStatus, bgColor: string) => {
-    const tasksInSection = tasks.filter((task) => task.taskStatus.toLowerCase() === section.toLowerCase());
+    const tasksInSection = tasks.filter(
+      (task) => task.taskStatus.toLowerCase() === section.toLowerCase(),
+    );
 
     return (
       <Card
-        title={<span className="px-2 py-1 rounded-sm" style={{ backgroundColor: bgColor }}>{capitalizeFirstLetter(section)}</span>}
+        title={
+          <span
+            className="px-2 py-1 rounded-sm"
+            style={{ backgroundColor: bgColor }}
+          >
+            {capitalizeFirstLetter(section)}
+          </span>
+        }
         className={`w-1/3 shadow-md border rounded-xl transition-all ${dropTarget === section ? "border-blue-500 bg-blue-100" : "bg-gray-100"}`}
         headStyle={{ backgroundColor: "#F1F1F1", padding: 0 }}
-        bodyStyle={{ backgroundColor: "#F1F1F1", padding: '20px', height: "100%" }}
+        bodyStyle={{
+          backgroundColor: "#F1F1F1",
+          padding: "20px",
+          height: "100%",
+        }}
         onDragOver={handleDragOver}
         onDragEnter={() => handleDragEnter(section)}
         onDragLeave={handleDragLeave}
@@ -132,10 +142,14 @@ const TaskBoard: React.FC<TaskBoardProps> = ({
       {isModalOpen && (
         <TaskPopup
           open={isModalOpen}
-          onClose={(taskData) => handleSubmit(taskData)}
+          onClose={(taskData) => taskData && handleSubmit(taskData)}
           selectedTaskId={selectedTaskId}
-          selectedIdtaskData={selectedIdTaskData}
-          setIsModalOpen={setIsModalOpen}
+          selectedIdtaskData={
+            selectedIdtaskData
+              ? (selectedIdtaskData as Partial<TaskData>)
+              : undefined
+          }
+          setIsModalOpen={(open) => setIsModalOpen(open)}
           onCloseModal={onCloseModal}
         />
       )}
